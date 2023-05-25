@@ -1,0 +1,27 @@
+Sample data store script
+
+import com.eviware.soapui.support.XmlHolder
+
+
+
+def holder = new XmlHolder( messageExchange.responseContentAsXml)
+//iso code
+def country_iso_code=holder.getNodeValue(context.expand('//m:ListOfCurrenciesByCodeResult/m:tCurrency[2]/m:sISOCode'))
+messageExchange.modelItem.testStep.testCase.testSuite.setPropertyValue('country_iso_code',country_iso_code)
+
+
+
+//country name
+def country_name=holder.getNodeValue(context.expand('//m:ListOfCurrenciesByCodeResult/m:tCurrency[2]/m:sName'))
+messageExchange.modelItem.testStep.testCase.testSuite.setPropertyValue('country_name',country_name)
+
+
+
+Assertion
+
+import com.eviware.soapui.support.XmlHolder
+def holder = new XmlHolder( messageExchange.responseContentAsXml)
+//isocode
+def act_iso_code = holder.getNodeValue(context.expand('xpath')
+def exp_iso_code = context.expand('${#TestSuite#Variable_name}')
+assert act_iso_code== exp_iso_code
